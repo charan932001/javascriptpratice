@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>API Call Example</title>
+    <script>
+       // document.getElementById("callApiBtn").addEventListener("click", callApi);//
+ 
+        function callApi() {
+            let url=document.getElementById("inputurl").text;
+            alert(url);
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const postsHtml = data.map(post => `<div><h2>${post.title}</h2><p>${post.body}</p></div>`).join('');
+                    document.getElementById("apiResponse").innerHTML = postsHtml;
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+    </script>
+</head>
+ 
+<body>
+    <input type=text id="inputurl" placeholder="Enter URL">
+    <button onclick="callApi()" id="callApiBtn">Call API new</button>
+    <div id="apiResponse"></div>
+ 
+</body>
+ 
+</html>
